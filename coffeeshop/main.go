@@ -1,22 +1,24 @@
 package main
 
 import (
-	"fmt"
-	"io"
+	"coffeeshop/coffee"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	http.HandleFunc("/ping", ping)
-
-	fmt.Println("Starting the server at port 8081")
-	err := http.ListenAndServe(":8081", nil)
-	if err != nil {
-		fmt.Println("Error while starting the server ", err)
-	}
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Welcome to the Coffeeshop!",
+		})
+	})
+	r.GET("/coffee", getCoffee)
+	r.Run(":8081")
 }
 
-func ping(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Got a ping")
-	io.WriteString(w, "Welcome to the Coffeeshop!\n")
+func getCoffee(c *gin.Context) {
+	coffeelist, _ := coffee.GetCoffees()
+	c.String(http.StatusOK, " %s", coffeelist)
 }
