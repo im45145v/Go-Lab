@@ -34,3 +34,13 @@ func GetCoffees() (*CoffeeList, error) {
 
 	return &Coffees, nil
 }
+func IsCoffeeAvailable(coffeetype string) bool {
+	for _, ele := range Coffees.List {
+		if ele.Name == coffeetype {
+			fmt.Println(fmt.Sprintf("%s for %v$ ", ele.Name, ele.Price))
+			return true
+		}
+
+	}
+	return false
+}
