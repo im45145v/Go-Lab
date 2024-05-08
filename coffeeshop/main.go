@@ -1,20 +1,22 @@
 package main
 
 import (
-        "fmt"
-        "coffeeshop/coffee"
+	"fmt"
+	"io"
+	"net/http"
 )
-func main() {
-        coffees, err := coffee.GetCoffees()
-        if err != nil {
-		fmt.Println("Error while getting coffeelist ", err)
-		return
-	}
 
-	fmt.Println("Printing the list of coffees available in the CoffeeShop...")
-        for _, element := range coffees.List {
-                result := fmt.Sprintf("%s for $%v", element.Name, element.Price)
-                fmt.Println(result)
-        }
-	fmt.Println("Is Latte Available? ", coffee.IsCoffeeAvailable("Latte"))
+func main() {
+	http.HandleFunc("/ping", ping)
+
+	fmt.Println("Starting the server at port 8081")
+	err := http.ListenAndServe(":8081", nil)
+	if err != nil {
+		fmt.Println("Error while starting the server ", err)
+	}
+}
+
+func ping(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Got a ping")
+	io.WriteString(w, "Welcome to the Coffeeshop!\n")
 }
