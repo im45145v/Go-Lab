@@ -1,0 +1,16 @@
+{
+   "list":[
+      {
+         "name":"Latte",
+         "price":2.5
+      },
+      {
+         "name":"Cappuccino",
+         "price":2.75
+      },
+      {
+         "name":"Flat White",
+         "price":2.25
+      }
+   ]
+}
